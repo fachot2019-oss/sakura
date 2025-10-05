@@ -14,9 +14,9 @@ jobs:
     - name: Add MSBuild to path
       uses: microsoft/setup-msbuild@v1.3
 
-    - name: Download and Install DirectX SDK
+    - name: Download and Install DirectX SDK (Fast Link)
       run: |
-        Invoke-WebRequest -Uri "https://archive.org/download/dxsdk_jun10/DXSDK_Jun10.exe" -OutFile "DXSDK.exe"
+        Invoke-WebRequest -Uri "https://raw.githubusercontent.com/zauonlok/DXSDK_June10/master/DXSDK_Jun10.exe" -OutFile "DXSDK.exe"
         Start-Process -FilePath "DXSDK.exe" -ArgumentList "/S" -Wait
 
     - name: Build the solution
