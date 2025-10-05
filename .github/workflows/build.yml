@@ -16,7 +16,7 @@ jobs:
 
     - name: Download and Install DirectX SDK
       run: |
-        Invoke-WebRequest -Uri "https://download.microsoft.com/download/A/E/7/AE743F36-632B-4809-87A9-AA1BB3458E31/DXSDK_Jun10.exe" -OutFile "DXSDK.exe"
+        Invoke-WebRequest -Uri "https://archive.org/download/dxsdk_jun10/DXSDK_Jun10.exe" -OutFile "DXSDK.exe"
         Start-Process -FilePath "DXSDK.exe" -ArgumentList "/S" -Wait
 
     - name: Build the solution
@@ -26,3 +26,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Sakura-Program
+        path: Release/sakura.exe
