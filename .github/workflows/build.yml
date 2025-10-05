@@ -1,0 +1,23 @@
+name: Build The Program
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: 'recursive'
+    - uses: microsoft/setup-msbuild@v1.3
+    - name: Install DirectX SDK
+      run: |
+        Invoke-WebRequest -Uri "https://download.microsoft.com/download/A/E/7/AE743F36-632B-4809-87A9-AA1BB3458E31/DXSDK_Jun10.exe" -OutFile "DXSDK.exe"
+        Start-Process -FilePath "DXSDK.exe" -ArgumentList "/S" -Wait
+    - name: Build the solution
+      run: msbuild sakura.sln /p:Configuration=Release /p:Platform=x88
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: Sakura-Program
+        path: Release/sakura.exe
