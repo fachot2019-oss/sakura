@@ -6,18 +6,36 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v3
+    # This has been updated to v4
+    - uses: actions/checkout@v4
       with:
         submodules: 'recursive'
+
     - uses: microsoft/setup-msbuild@v1.3
+
     - name: Install DirectX SDK
       run: |
         Invoke-WebRequest -Uri "https://download.microsoft.com/download/A/E/7/AE743F36-632B-4809-87A9-AA1BB3458E31/DXSDK_Jun10.exe" -OutFile "DXSDK.exe"
         Start-Process -FilePath "DXSDK.exe" -ArgumentList "/S" -Wait
+
     - name: Build the solution
-      run: msbuild sakura.sln /p:Configuration=Release /p:Platform=x88
+      run: msbuild sakura.sln /p:Configuration=Release /p:Platform=x86
+
+    # This has been updated to v4, which fixes your error
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Sakura-Program
-        path: Release/sakura.exe
+        path: Release/sakura.exe```
+
+6.  Scroll to the top-right and click the green **"Commit changes..."** button.
+
+### **What Happens Now?**
+
+By saving that change, you have automatically started a new build process.
+
+*   Click on the **"Actions"** tab at the top of your repository.
+*   You will see a new workflow running. It should now complete successfully.
+*   Once it finishes with a green checkmark, you can click on it and download the **"Sakura-Program"** artifact just like before.
+
+Sorry again for that error, and well done for spotting it! You've just fixed your first build script.
